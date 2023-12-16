@@ -1,7 +1,5 @@
-﻿using Core.Entities;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using Utszebe.Core.Entities;
 using Utszebe.Core.Interfaces;
 
@@ -23,13 +21,6 @@ namespace API.Controllers
 
         public List<Message> MessagesEchanged { get; set; } = new List<Message>();
 
-        [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<SqlQuery>>> GetProductType()
-        {
-            //return Ok(await _sqlRepository.GetC());
-            return Ok();
-        }
-
         [HttpGet("columns")]
         public async Task<ActionResult<string>> GetColumns()
         {
@@ -50,21 +41,5 @@ namespace API.Controllers
         {
             return Ok(await _database.CreateDatabaseAsync());
         }
-
-        [HttpPost]
-        public async Task<ActionResult<SqlQuery>> GetSQLTranslation([FromBody] Message request)
-        {
-            if (request is null)
-            {
-                return BadRequest("Invalid request format");
-            }
-            MessagesEchanged.Add(request);
-
-                
-            var response = await _messageTranslator.TranslateMessageToSQLQuery(request);
-            
-            return Ok(JsonSerializer.Serialize(response));
-        }
-
     }
 }

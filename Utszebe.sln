@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utszebe.API", "Utszebe\Utszebe.API.csproj", "{837FFCAE-9E7A-446D-ADE2-6D9762A6BF52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utszebe.API", "Utszebe\Utszebe.API.csproj", "{837FFCAE-9E7A-446D-ADE2-6D9762A6BF52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utszebe.Core", "Utszebe.Core\Utszebe.Core.csproj", "{D8707070-4F27-4BBD-9ECD-3F2F3BAF779C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utszebe.Core", "Utszebe.Core\Utszebe.Core.csproj", "{D8707070-4F27-4BBD-9ECD-3F2F3BAF779C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utszebe.Infrastracture", "Utszebe.Infrastracture\Utszebe.Infrastracture.csproj", "{D0AFDBD9-0F47-4C89-BFAB-3B6B4FDE5627}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utszebe.Infrastracture", "Utszebe.Infrastracture\Utszebe.Infrastracture.csproj", "{D0AFDBD9-0F47-4C89-BFAB-3B6B4FDE5627}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

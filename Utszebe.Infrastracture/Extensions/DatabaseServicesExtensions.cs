@@ -18,7 +18,6 @@ namespace Utszebe.Infrastracture.Extensions
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<IDatabaseRepository, DatabaseRepository>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>)); //generic repos
             services.AddDbContext<StoreContext>(opt =>
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
