@@ -1,5 +1,6 @@
 ﻿using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Utszebe.Core.Entities;
 using Utszebe.Core.Interfaces;
 
@@ -11,14 +12,27 @@ namespace API.Controllers
     {
         private readonly IDatabaseRepository _database;
         private readonly IMessageTranslator _messageTranslator;
-        
+        private readonly IHubContext<ResultHub> _hubContext;
 
-        public QueryController(IDatabaseRepository database, IMessageTranslator messageTranslator)
+
+        public QueryController(IDatabaseRepository database, IMessageTranslator messageTranslator, IHubContext<ResultHub> hubContext)
         {
             _database = database;
             _messageTranslator = messageTranslator;
+            _hubContext = hubContext;
+
         }
 
+        [HttpPost("result")]
+        public async Task<ActionResult<string[]>> GetResult()
+        {
+            var resultFromAi = "WYNIK CHATA";
+
+            // Prześlij wynik do klientów za pomocą SignalR
+            await _hubContext.Clients.All.SendAsync("ReceiveResult", resultFromAi);
+
+            return Ok(resultFromAi);
+        }
         public List<Message> MessagesEchanged { get; set; } = new List<Message>();
 
         [HttpGet("columns")]

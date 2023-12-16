@@ -1,13 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; // Import HttpClient
 import { AppComponent } from '../app.component';
+import { SignalRService } from '../signal-r.service'
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit {
   @Input() index: number | undefined;
 
   query: string = '';
@@ -17,8 +18,17 @@ export class ChatComponent {
   inputsDisabled: boolean = false; 
   executeButtonVisible: boolean = false;
 
-  constructor(private http: HttpClient, private parent: AppComponent) {} // Inject HttpClient
+  constructor(private http: HttpClient, private parent: AppComponent, private signalRService: SignalRService) {} // Inject HttpClient
 
+  ngOnInit(){
+    this.signalRService.addResultListener();
+
+    this.signalRService.resultSubject.subscribe(result => {
+      console.error(result);
+      // Tutaj dostaniesz się do nowych wyników i możesz zaktualizować this.messages[0]
+      this.messages[0] = 'Received result: ' + result;
+    });
+  }
   clearQuery() {
     this.query = '';
   }
