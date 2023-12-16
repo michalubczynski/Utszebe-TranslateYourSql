@@ -4,7 +4,6 @@ using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Utszebe.Core.Interfaces;
-using Utszebe.Core.Tranlator;
 
 namespace API.Extensions
 {
@@ -35,7 +34,6 @@ namespace API.Extensions
                 };
             });
 
-            services.AddScoped<IMessageTranslator, MessageTranslator>();
 
             //TODO: services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //mapper
 
