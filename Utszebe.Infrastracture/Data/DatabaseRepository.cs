@@ -1,5 +1,4 @@
-﻿using Core.Entities;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -29,10 +28,6 @@ namespace Utszebe.Infrastracture.Data
             //_context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Task<bool> CanExecuteQuery(SqlQuery sqlQuery)
-        {
-            throw new NotImplementedException();
-        }
         public async Task<bool> CreateDatabaseAsync()
         {
             await Task.Delay(0);
