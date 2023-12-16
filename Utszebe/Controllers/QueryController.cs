@@ -1,6 +1,7 @@
-﻿using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Text.Json;
 using Utszebe.Core.Entities;
 using Utszebe.Core.Interfaces;
 
@@ -54,6 +55,20 @@ namespace API.Controllers
         public async Task<ActionResult<bool>> CreateDatabase()
         {
             return Ok(await _database.CreateDatabaseAsync());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AskAI([FromBody] Message request)
+        {
+            if (request is null)
+            {
+                return BadRequest("Invalid request format");
+            }
+            MessagesEchanged.Add(request);
+
+            var response = await _messageTranslator.TranslateMessageToSQLQuery(request);
+
+            return Ok(JsonSerializer.Serialize(response));
         }
     }
 }
