@@ -9,7 +9,9 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utszebe.Core.Interfaces;
 using Utszebe.Infrastracture.Data;
+using Utszebe.Infrastracture.Services;
 
 namespace Utszebe.Infrastracture.Extensions
 {
@@ -22,6 +24,9 @@ namespace Utszebe.Infrastracture.Extensions
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddScoped<IMessageTranslator, MessageTranslatorService>();
+
 
             return services;
         }
