@@ -1,0 +1,10 @@
+.chat-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; 
+}
+.btn-container {
+    margin-top: 1%;
+  }
+

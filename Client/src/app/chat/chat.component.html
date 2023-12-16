@@ -1,0 +1,23 @@
+<div class="chat-container">
+  <app-spinner [show]="isLoading"></app-spinner>
+
+    <div class="chat">
+
+      <div class="chat-input">
+        <input type="text" [(ngModel)]="query" placeholder="Wpisz tu twoje zapytanie" [disabled]="inputsDisabled" [ngClass]="{'disabled-input': inputsDisabled}"/>
+        <button (click)="clearQuery()" [disabled]="inputsDisabled || query.length == 0" [ngClass]="{'disabled-buttons': inputsDisabled || query.length == 0}">Wyczyść</button>
+        <button (click)="translate()" [disabled]="inputsDisabled || query.length == 0" [ngClass]="{'disabled-buttons': inputsDisabled || query.length == 0}">Tłumacz</button>
+      </div>
+
+      <div class="chat-messages">
+        <div *ngFor="let message of messages" class="message">{{ message }}</div>
+      </div>
+      <div class="translated-query">
+        <input *ngIf="translatedQuery != ''" type="text" [(ngModel)]="translatedQuery" />
+        <button *ngIf="executeButtonVisible" (click)="executeQuery()">Wykonaj</button>
+
+      </div>
+
+    </div>
+  </div>
+  
