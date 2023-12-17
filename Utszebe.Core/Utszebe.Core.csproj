@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentResults" Version="3.15.2" />
     <PackageReference Include="LLamaSharp" Version="0.3.0" />
     <PackageReference Include="LLamaSharp.Backend.Cpu" Version="0.3.0" />
   </ItemGroup>
