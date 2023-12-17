@@ -4,6 +4,6 @@ namespace Utszebe.Core.Interfaces
 {
     public interface IMessageTranslator
     {
-        public Task<String> TranslateMessageToSQLQuery(Message message, Func<string, Task> func);
+        public Task<String> TranslateMessageToSQLQuery(string message, Func<string, Task> func);
     }
 }
