@@ -35,8 +35,8 @@ namespace Utszebe.Infrastracture.Services
             {
                 try
                 {
-                    var uri = _configuration.GetSection("AiApiUri").Value;
-                    await clientWebSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
+                    var hostIp = _configuration.GetSection("HostIpAddress").Value;
+                    await clientWebSocket.ConnectAsync(new Uri($"ws://{hostIp}:5005/api/v1/stream"), CancellationToken.None);
                     await clientWebSocket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
 
 
