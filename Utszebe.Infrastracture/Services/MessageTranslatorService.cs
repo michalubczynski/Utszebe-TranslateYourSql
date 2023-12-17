@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FluentResults;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,12 @@ namespace Utszebe.Infrastracture.Services
             _configuration = configuration;
         }
 
-        public async Task<string> TranslateMessageToSQLQuery(string message, Func<string, Task> func)
+        public async Task<Result<string>> TranslateMessageToSQLQuery(string message, Func<string, Task> func)
         {
             string result = "";
             Request request = new Request(message);
-            var serializedRequest = request.Serialize();
-            var buffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes(serializedRequest));
+            var buffer = request.AsByteArray();
+            
 
             using (var clientWebSocket = new ClientWebSocket())
             {
@@ -38,22 +39,25 @@ namespace Utszebe.Infrastracture.Services
                     await clientWebSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
                     await clientWebSocket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
 
-                    var receiveBuffer = new byte[1024];
 
 
                     // Define a variable to concatenate all text
-                    result = await ReadData(clientWebSocket, receiveBuffer, func);
+                    result = await ReadData(clientWebSocket, func);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception: {ex.Message}");
+                    //TODO
+                    //log this 
+                    //Console.WriteLine($"Exception: {ex.Message}");
+                    return Result.Fail(ex.Message);
                 }
             }
             return result;
         }
 
-        private async Task<string> ReadData(ClientWebSocket clientWebSocket, byte[] receiveBuffer, Func<string, Task> func)
+        private async Task<string> ReadData(ClientWebSocket clientWebSocket, Func<string, Task> func)
         {
+            var receiveBuffer = new byte[1024];
             var concatenatedTextSb = new StringBuilder();
             while (clientWebSocket.State == WebSocketState.Open)
             {
@@ -94,8 +98,8 @@ namespace Utszebe.Infrastracture.Services
         private async Task CloseConnection(ClientWebSocket clientWebSocket, string receiveResult)
         {
             await clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
-            Console.WriteLine("\n\nConnection closed.");
-            Console.WriteLine($"Close status: {receiveResult}");
+            //Console.WriteLine("\n\nConnection closed.");
+            //Console.WriteLine($"Close status: {receiveResult}");
         }
     }
 }

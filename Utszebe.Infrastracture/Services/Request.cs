@@ -46,9 +46,10 @@ namespace Utszebe.Infrastracture.Services
         }
         Dictionary<string, object> Body { get; set; }
 
-        public string Serialize()
+        public ArraySegment<byte> AsByteArray()
         {
-            return JsonSerializer.Serialize(Body);
+            var serializedRequest = JsonSerializer.Serialize(Body);
+            return new ArraySegment<byte>(Encoding.UTF8.GetBytes(serializedRequest));
         }
     }
 }

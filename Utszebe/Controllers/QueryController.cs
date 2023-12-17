@@ -32,10 +32,6 @@ namespace API.Controllers
         [HttpPost("result")]
         public async Task<ActionResult<string[]>> GetResult([FromBody] Message request)
         {
-            if (request is null)
-            {
-                return BadRequest("Invalid request format");
-            }
             MessagesEchanged.Add(request);
 
             //StringBuilder prompt = new StringBuilder();
@@ -50,8 +46,12 @@ namespace API.Controllers
             var promptString = request.UserInput;
 
             var fullResultFromAi = await _messageTranslator.TranslateMessageToSQLQuery(promptString, UpdateRespopnse);
+            if (fullResultFromAi.IsFailed)
+            {
+                return StatusCode(500);
+            }
 
-            return Ok(JsonSerializer.Serialize(fullResultFromAi));
+            return Ok(JsonSerializer.Serialize(fullResultFromAi.Value));
         }
 
         private async Task UpdateRespopnse(string response)
