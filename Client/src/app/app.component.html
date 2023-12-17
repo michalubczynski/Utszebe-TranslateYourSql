@@ -1,5 +1,6 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="signal-indicator" [ngClass]="{'connected': isConnected === 'connected', 'retrying': isConnected === 'retrying', 'disconnected': isConnected === 'disconnected'}"></div>
       <a class="navbar-brand" href="#">Nie chcesz Utszebe?</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

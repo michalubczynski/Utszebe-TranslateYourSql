@@ -1,3 +1,5 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -77,4 +79,38 @@
   border: none;
   border-radius: 5px;
   cursor: not-allowed; /* Change the cursor style to indicate it's not clickable */
+}
+.modern-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s ease-in-out;
+
+  /* Enable text wrapping */
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.modern-button {
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #007bff; /* Change the color to your preference */
+  border-radius: 5px;
+  background-color: #007bff; /* Change the color to your preference */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.modern-button i {
+  margin-left: 5px;
+}
+
+.modern-button:hover {
+  background-color: #0056b3; /* Change the color to your preference */
 }
