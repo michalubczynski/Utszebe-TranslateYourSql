@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { SignalRService } from './signal-r.service'; 
+
 
 @Component({
   selector: 'app-root',
@@ -11,9 +13,15 @@ export class AppComponent {
   title = 'Angular SQL Chat App';
   index: number = 0; // Initialize index to 0
   newQueryAdditable: boolean = false;
-  constructor(private http: HttpClient) {} // Inject HttpClient
+  isConnected: string = 'disconnected';
+
+  constructor(private http: HttpClient, private signalRService: SignalRService) {} // Inject HttpClient
 
   ngOnInit(){
+        // Subscribe to connectivity changes
+        this.signalRService.connectionStatus.subscribe(status => {
+          this.isConnected = status;
+        });
     this.chatComponents.push({});
 
   }
