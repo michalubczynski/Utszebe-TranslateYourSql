@@ -13,8 +13,10 @@
         <div *ngFor="let message of messages" class="message">{{ message }}</div>
       </div>
       <div class="translated-query">
-        <input *ngIf="translatedQuery != ''" type="text" [(ngModel)]="translatedQuery" />
-        <button *ngIf="executeButtonVisible" (click)="executeQuery()">Wykonaj</button>
+        <input *ngIf="translatedQuery != ''" type="text" [(ngModel)]="translatedQuery" class="modern-input" />
+        <button *ngIf="executeButtonVisible" (click)="executeQuery()" class="modern-button">
+          <i class="fas fa-arrow-right"></i>
+        </button>
 
       </div>
 

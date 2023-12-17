@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ChatComponent } from './chat/chat.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { SignalRService } from './signal-r.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     FormsModule,
     HttpClientModule, 
   ],
-  providers: [],
+  providers: [SignalRService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
