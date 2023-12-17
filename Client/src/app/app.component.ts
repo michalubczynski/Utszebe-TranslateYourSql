@@ -12,6 +12,7 @@ import { SignalRService } from './signal-r.service';
 export class AppComponent {
   title = 'Angular SQL Chat App';
   index: number = 0; // Initialize index to 0
+  chatComponents: any[] = [];
   newQueryAdditable: boolean = false;
   isConnected: string = 'disconnected';
 
@@ -44,12 +45,12 @@ export class AppComponent {
     this.index = 0; 
     window.location.reload();
   }
-  chatComponents: any[] = [];
-
+  
   addChatComponent() {
     this.newQueryAdditable = false;
-    this.chatComponents.push({});
-  }
+    const newIndex = this.chatComponents.length;
+    this.chatComponents.push({ index: newIndex });  }
+    
   updateNewQueryAddable(value: boolean) {
     this.newQueryAdditable = value;
   }
