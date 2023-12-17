@@ -14,7 +14,7 @@ export class ChatComponent implements OnInit {
   query: string = '';
   messages: string[] = [];
   translatedQuery: string = '';
-  isLoading: boolean = false; 
+  isLoading: boolean = false;  // IF True, blurs window and spinner appear on middle of page
   inputsDisabled: boolean = false; 
   executeButtonVisible: boolean = false;
 
@@ -35,10 +35,8 @@ export class ChatComponent implements OnInit {
 
   translate() {
     this.inputsDisabled = true;
-
-    this.isLoading = true; // Show the loading indicator
     const port = 5257; // Change this to your desired port number
-    const apiUrl = `http://localhost:${port}/api/Query/`; // Adjust the route as needed
+    const apiUrl = `http://localhost:${port}/api/Query/result`; // Adjust the route as needed
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -52,15 +50,9 @@ export class ChatComponent implements OnInit {
     this.http.post<string>(apiUrl, JSON.stringify(message), { headers })
       .subscribe(
         (result: string) => {
-          this.isLoading = false; // Hide the loading indicator when done
-
-          this.messages[0] = "Przetlumaczone SQL query: "+ JSON.stringify(this.query);
-          this.translatedQuery = JSON.stringify(result).replace(/"/g, '');
-
+          this.translatedQuery = result;
         },
         (error) => {
-          this.isLoading = false; // Hide the loading indicator when done
-
           console.error('Error:', error);
           // Handle the error response here
         }
