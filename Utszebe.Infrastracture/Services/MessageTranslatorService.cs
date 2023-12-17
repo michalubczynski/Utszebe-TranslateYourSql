@@ -23,9 +23,6 @@ namespace Utszebe.Infrastracture.Services
             _configuration = configuration;
         }
 
-        public bool IsProcessing { get; set; } = false;
-
-
         public async Task<string> TranslateMessageToSQLQuery(Message message, Func<string, Task> func)
         {
             string result = "";
@@ -57,7 +54,6 @@ namespace Utszebe.Infrastracture.Services
 
         private async Task<string> ReadData(ClientWebSocket clientWebSocket, byte[] receiveBuffer, Func<string, Task> func)
         {
-            IsProcessing = true;
             var concatenatedTextSb = new StringBuilder();
             while (clientWebSocket.State == WebSocketState.Open)
             {
@@ -92,7 +88,6 @@ namespace Utszebe.Infrastracture.Services
                     }
                 }
             }
-            IsProcessing = false;
             return concatenatedTextSb.ToString();
         }
 
