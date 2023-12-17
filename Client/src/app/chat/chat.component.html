@@ -10,7 +10,7 @@
       </div>
 
       <div class="chat-messages">
-        <div *ngFor="let message of messages" class="message">{{ message }}</div>
+        <div class="message">{{ message[this.index!] }}</div>
       </div>
       <div class="translated-query">
         <input *ngIf="translatedQuery != ''" type="text" [(ngModel)]="translatedQuery" class="modern-input" />
