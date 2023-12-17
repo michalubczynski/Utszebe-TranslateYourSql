@@ -23,7 +23,10 @@ namespace Utszebe.Infrastracture.Services
             _configuration = configuration;
         }
 
-        public async Task<string> TranslateMessageToSQLQuery(Message message)
+        public bool IsProcessing { get; set; } = false;
+
+
+        public async Task<string> TranslateMessageToSQLQuery(Message message, Func<string, Task> func)
         {
             string result = "";
             Request request = new Request(message.UserInput);
@@ -40,8 +43,9 @@ namespace Utszebe.Infrastracture.Services
 
                     var receiveBuffer = new byte[1024];
 
+
                     // Define a variable to concatenate all text
-                    result = await ReadData(clientWebSocket, receiveBuffer);
+                    result = await ReadData(clientWebSocket, receiveBuffer, func);
                 }
                 catch (Exception ex)
                 {
@@ -51,8 +55,9 @@ namespace Utszebe.Infrastracture.Services
             return result;
         }
 
-        private async Task<string> ReadData(ClientWebSocket clientWebSocket, byte[] receiveBuffer)
+        private async Task<string> ReadData(ClientWebSocket clientWebSocket, byte[] receiveBuffer, Func<string, Task> func)
         {
+            IsProcessing = true;
             var concatenatedTextSb = new StringBuilder();
             while (clientWebSocket.State == WebSocketState.Open)
             {
@@ -63,16 +68,11 @@ namespace Utszebe.Infrastracture.Services
                     await CloseConnection(clientWebSocket, receiveResult.CloseStatus.ToString()!);
                     return string.Empty;
                 }
-
-                var receivedData = Encoding.UTF8.GetString(receiveBuffer, 0, receiveResult.Count);
+                
                 // Process received data here
+                var receivedData = Encoding.UTF8.GetString(receiveBuffer, 0, receiveResult.Count);
+
                 // Parse JSON and handle accordingly
-
-                //DEBUG
-                //Console.WriteLine(receivedData);
-
-                // Extract the 'text' value from the received message and concatenate it
-
                 using JsonDocument jsonDoc = JsonDocument.Parse(receivedData);
                 if (jsonDoc.RootElement.TryGetProperty("event", out JsonElement eventElement))
                 {
@@ -83,12 +83,16 @@ namespace Utszebe.Infrastracture.Services
                         await CloseConnection(clientWebSocket, receiveResult.CloseStatus.ToString()!);
                         break;
                     }
+                    // Extract the 'text' value from the received message and concatenate it
                     else if (jsonDoc.RootElement.TryGetProperty("text", out JsonElement textElement))
                     {
                         concatenatedTextSb.Append(textElement.GetString());
+                        string res = concatenatedTextSb.ToString();
+                        await func(res);
                     }
                 }
             }
+            IsProcessing = false;
             return concatenatedTextSb.ToString();
         }
 
