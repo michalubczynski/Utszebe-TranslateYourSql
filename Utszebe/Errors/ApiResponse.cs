@@ -1,4 +1,6 @@
-﻿namespace API.Errors
+﻿using static Utszebe.Infrastructure.Translation.ResponseEnum;
+
+namespace API.Errors
 {
     public class ApiResponse
     {
@@ -17,10 +19,10 @@
 
             return statusCode switch
             {
-                400 => "Bad request encountered",
-                401 => "Not authorized",
-                404 => "No resource was found",
-                500 => "Internal server error",
+                (int)Response.BadRequest => "Bad request encountered",
+                (int)Response.BadAuthorization => "Not authorized",
+                (int)Response.NoResource => "No resource was found",
+                (int)Response.InternalError => "Internal server error",
                 _ => null
             } ?? "Null reference";
         }

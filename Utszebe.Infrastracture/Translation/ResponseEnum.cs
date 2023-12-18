@@ -1,4 +1,4 @@
-﻿namespace Utszebe.API.Helpers
+﻿namespace Utszebe.Infrastructure.Translation
 {
     public class ResponseEnum
     {
