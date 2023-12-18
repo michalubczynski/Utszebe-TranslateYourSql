@@ -42,8 +42,6 @@ namespace Utszebe.Infrastracture.Translation
             var responseJson = await response.Content.ReadAsStringAsync();
             var translationResult = JsonConvert.DeserializeObject<TranslationResponse>(responseJson);
 
-            if (translationResult == null) return string.Empty;
-
             if (translationResult.ResponseStatus == Convert.ToInt32(Response.Success))
             {
                 return translationResult.TranslatedText;
