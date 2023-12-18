@@ -19,14 +19,21 @@ namespace API.Controllers
         private readonly IDatabaseRepository _database;
         private readonly IMessageTranslator _messageTranslator;
         private readonly IHubContext<ResultHub> _hubContext;
+        private readonly ITranslator _translator;
 
 
-        public QueryController(IDatabaseRepository database, IMessageTranslator messageTranslator, IHubContext<ResultHub> hubContext)
+        public QueryController(IDatabaseRepository database, IMessageTranslator messageTranslator, IHubContext<ResultHub> hubContext, ITranslator translator)
         {
             _database = database;
             _messageTranslator = messageTranslator;
             _hubContext = hubContext;
+            _translator = translator;
+        }
 
+        [HttpGet("translate")]
+        public async Task<string> TestTranslation()
+        {
+            return await _translator.Translate("Wczoraj widzialem dwa koty trzy psy i osiemnascie hotdogow ktore pachnialy naftalina");
         }
 
         [HttpPost("result")]

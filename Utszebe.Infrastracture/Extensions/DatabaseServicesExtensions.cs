@@ -3,15 +3,10 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Utszebe.Core.Interfaces;
 using Utszebe.Infrastracture.Data;
 using Utszebe.Infrastracture.Services;
+using Utszebe.Infrastracture.Translation;
 
 namespace Utszebe.Infrastracture.Extensions
 {
@@ -19,6 +14,7 @@ namespace Utszebe.Infrastracture.Extensions
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddScoped<ITranslator, Translator>();
             services.AddScoped<IDatabaseRepository, DatabaseRepository>();
             services.AddDbContext<StoreContext>(opt =>
             {
