@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Utszebe.Core.Entities.TranslationMembers;
 using Utszebe.Core.Interfaces;
-using static Utszebe.API.Helpers.ResponseEnum;
+using static Utszebe.Infrastructure.Translation.ResponseEnum;
 
 namespace Utszebe.Infrastracture.Translation
 {
