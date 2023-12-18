@@ -31,9 +31,11 @@ namespace API.Controllers
         }
 
         [HttpGet("translate")]
-        public async Task<string> TestTranslation()
+        public async Task<ActionResult<string>> TestTranslation()
         {
-            return await _translator.Translate("Wczoraj widzialem dwa koty trzy psy i osiemnascie hotdogow ktore pachnialy naftalina");
+            var translatedText = await _translator.Translate("Wczoraj widzialem dwa koty trzy psy i osiemnascie hotdogow ktore pachnialy naftalina");
+
+            return translatedText == string.Empty ? BadRequest() : translatedText; 
         }
 
         [HttpPost("result")]
