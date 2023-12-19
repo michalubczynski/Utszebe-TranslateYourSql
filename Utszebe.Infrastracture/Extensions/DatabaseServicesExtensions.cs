@@ -21,7 +21,7 @@ namespace Utszebe.Infrastracture.Extensions
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddScoped<IMessageTranslator, MessageTranslatorService>();
+            services.AddScoped<IQuerGeneratorAIModel, QuerGeneratorAIModel>();
 
 
             return services;

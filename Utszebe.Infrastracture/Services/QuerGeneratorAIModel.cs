@@ -15,16 +15,16 @@ using Utszebe.Core.Interfaces;
 
 namespace Utszebe.Infrastracture.Services
 {
-    public class MessageTranslatorService : IMessageTranslator
+    public class QuerGeneratorAIModel : IQuerGeneratorAIModel
     {
         private readonly IConfiguration _configuration;
 
-        public MessageTranslatorService(IConfiguration configuration)
+        public QuerGeneratorAIModel(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public async Task<Result<string>> TranslateMessageToSQLQuery(string message, Func<string, Task> func)
+        public async Task<Result<string>> GenerateResponse(string message, Func<string, Task> func)
         {
             string result = "";
             Request request = new Request(message);
@@ -38,8 +38,6 @@ namespace Utszebe.Infrastracture.Services
                     var hostIp = _configuration.GetSection("HostIpAddress").Value;
                     await clientWebSocket.ConnectAsync(new Uri($"ws://{hostIp}:5005/api/v1/stream"), CancellationToken.None);
                     await clientWebSocket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-
-
 
                     // Define a variable to concatenate all text
                     result = await ReadData(clientWebSocket, func);
